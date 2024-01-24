@@ -290,25 +290,15 @@ class Dreamer:
 
             input_image = octave_base + self.detail
 
-            # print types
-            # print("Input Image: ", input_image.dtype)
-            # print("Octave Base: ", octave_base.dtype)
-
-            # # tensor from nunmpy
-            # input_image = torch.from_numpy(input_image)
-
-            # # convert octave base to c10:Half
-            # octave_base = octave_base.to(torch.float16)
-
-            # convert input image to c10:Half
-            # input_image = torch.from_numpy(input_image).to(torch.float16)
-
             dreamed_image = self.dream(
                 input_image, model, *map(lambda x: x[octave], args)
             )
 
             self.detail = dreamed_image - octave_base
 
+        # Reset detail to zero after each image is processed
+        self.detail = np.zeros_like(octaves[-1])
+        
         return input_image
 
     def save_img(self, img, suffix, iter_):
