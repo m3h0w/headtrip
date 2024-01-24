@@ -1,3 +1,7 @@
+# Fork notes
+
+- fp16 has to be False for CPU and True for GPU
+
 # Pytorch Headtrip
 
 -   Work in Progress

@@ -1,0 +1,11 @@
+venv
+output
+input
+examples
+*.png
+*.jpg
+*.mp4
+__pycache__
+PythonImport*
+.vscode
+depth_model

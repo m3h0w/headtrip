@@ -31,8 +31,8 @@ invert_depth: False #foreground/background
 pretrained: True
 ########
 # input and output path
-input: "examples/example_img/"
-outpath: "examples/output"
+input: "input/"
+outpath: "output"
 # sequence startposition when sorted
 start_position: 0
 ######
@@ -44,4 +44,4 @@ model: vgg19
 seq: True
 
 # float precision 16
-fp16: True
+fp16: False

@@ -217,9 +217,13 @@ class Dreamer:
             TYPE: Description
         """
         Tensor = (
-            torch.cuda.FloatTensor if torch.cuda.is_available else torch.FloatTensor
+            torch.cuda.FloatTensor if torch.cuda.is_available() else torch.FloatTensor
         )
         image = Variable(Tensor(image), requires_grad=True)
+        if d_img is not None:
+            d_img = Variable(Tensor(d_img), requires_grad=False)
+        if mask is not None:
+            mask = Variable(Tensor(mask), requires_grad=False)
 
         for n in range(self.config["num_iterations"]):
             image = self.forward(model, image, n, d_img, mask)
@@ -284,6 +288,19 @@ class Dreamer:
                 )
 
             input_image = octave_base + self.detail
+
+            # print types
+            # print("Input Image: ", input_image.dtype)
+            # print("Octave Base: ", octave_base.dtype)
+
+            # # tensor from nunmpy
+            # input_image = torch.from_numpy(input_image)
+
+            # # convert octave base to c10:Half
+            # octave_base = octave_base.to(torch.float16)
+
+            # convert input image to c10:Half
+            # input_image = torch.from_numpy(input_image).to(torch.float16)
 
             dreamed_image = self.dream(
                 input_image, model, *map(lambda x: x[octave], args)
@@ -379,7 +396,7 @@ class Dreamer:
 
     def dream_single(self):
         """Dreams independent frames"""
-        for i, path in enumerate(self.img_list):
+        for i, path in enumerate(tqdm.tqdm(self.img_list, desc="Dreaming")):
             img1 = Image.open(path)
             d_img = self.deep_dream(self.transform(img1), self.model, i, seq="first")
 
