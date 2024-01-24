@@ -278,7 +278,8 @@ class Dreamer:
 
         kernel = np.ones((5, 5), np.uint8)
         self.detail = np.zeros_like(octaves[-1])
-        for octave, octave_base in enumerate(tqdm.tqdm(octaves[::-1], desc="Dreaming")):
+        # for octave, octave_base in enumerate(tqdm.tqdm(octaves[::-1], desc="Dreaming")):
+        for octave, octave_base in enumerate(octaves[::-1]):
             if octave > 0:
                 # Upsample detail to new octave dimension
                 self.detail = nd.zoom(
@@ -405,7 +406,7 @@ class Dreamer:
     def dream_seq(self):
         """Dreams a sequence with optical flow"""
 
-        for i, path in enumerate(self.img_list[self.config["start_position"] :]):
+        for i, path in enumerate(tqdm.tqdm(self.img_list[self.config["start_position"] :], desc="Dreaming")):
 
             if i == 0:
                 img1 = Image.open(path)
