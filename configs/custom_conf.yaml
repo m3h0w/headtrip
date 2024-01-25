@@ -1,6 +1,6 @@
 
 ######### Hyperparameters
-num_iterations: 5
+num_iterations: 10
 num_octaves: 12
 octave_scale: 1.2
 lr: 0.008
@@ -40,6 +40,8 @@ start_position: 0
 #c hange model here, available are 
 # resnet, vgg, alexnet, inception, densenet, mobile, resnetx, squeeze, masnet, googlenet
 model: vgg19
+######
+detail_blending_coef: 0
 
 # set true for video sequence
 seq: True

@@ -39,6 +39,8 @@ start_position: 0
 #c hange model here, available are 
 # resnet, vgg, alexnet, inception, densenet, mobile, resnetx, squeeze, masnet, googlenet
 model: vgg19
+######
+detail_blending_coef: 1
 
 # set true for video sequence
 seq: True

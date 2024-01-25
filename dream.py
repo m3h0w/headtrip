@@ -288,7 +288,8 @@ class Dreamer:
                     order=1,
                 )
 
-            input_image = octave_base + self.detail
+            dreamed_result = octave_base + self.detail
+            input_image = octave_base + self.detail * self.config["detail_blending_coef"]
 
             dreamed_image = self.dream(
                 input_image, model, *map(lambda x: x[octave], args)
@@ -298,8 +299,8 @@ class Dreamer:
 
         # Reset detail to zero after each image is processed
         self.detail = np.zeros_like(octaves[-1])
-        
-        return input_image
+
+        return dreamed_result
 
     def save_img(self, img, suffix, iter_):
         """Summary
