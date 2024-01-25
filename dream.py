@@ -438,6 +438,12 @@ class Dreamer:
                 flow_iter += 1
                 flow_iter = 0 if flow_iter > 5 else flow_iter
 
+    def is_running_on_gpu():
+        if torch.cuda.is_available():
+            return True
+        else:
+            return False
+
 
 def start_dreamer(config):
     """
@@ -457,6 +463,8 @@ def start_dreamer(config):
 
     outpath = config["outpath"]
     os.makedirs(outpath, exist_ok=True)
+
+    print("Can run on gpu: ", torch.cuda.is_available())
 
     dreamer = Dreamer(img_p, outpath, config)
     if config["seq"]:
